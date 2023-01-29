@@ -1,0 +1,33 @@
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    name TEXT NOT NULL,
+    hash TEXT NOT NULL,
+    salt TEXT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS secrets (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    name VARCHAR(250) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    UNIQUE(user_id, name)
+);
+
+CREATE TABLE IF NOT EXISTS shared_secrets (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    owner_id INTEGER NOT NULL,
+    secret_id INTEGER NOT NULL,
+    shared_with INTEGER NOT NULL,
+    until TIMESTAMP,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (owner_id) REFERENCES users (id),
+    FOREIGN KEY (secret_id) REFERENCES secrets (id),
+    FOREIGN KEY (shared_with) REFERENCES users (id),
+    UNIQUE(secret_id, shared_with)
+);

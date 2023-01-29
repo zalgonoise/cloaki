@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+
+  cloaki:
+    build:
+      context: . 
+      dockerfile: ./Dockerfile
+    container_name: cloaki
+    ports: 
+      - 8080:8080
+    restart: unless-stopped
+    volumes:
+      - /tmp/cloaki:/cloaki
