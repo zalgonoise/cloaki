@@ -16,6 +16,8 @@ var Default = Config{
 	BoltDBPath:     "/cloaki/keys.db",
 	SQLiteDBPath:   "/cloaki/sqlite.db",
 	SigningKeyPath: "/cloaki/server/key",
+	LogFilePath:    "/cloaki/error.log",
+	TraceFilePath:  "/cloaki/trace.json",
 }
 
 // Option describes setter types for a Config
